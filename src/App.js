@@ -3,6 +3,7 @@ import {
   MemoryRouter, 
   Switch, 
   Route,
+  useParams
 } from 'react-router-dom';
 
 
@@ -34,16 +35,10 @@ const HelloWorld = () => {
 };
 
 const About = () => {
-  console.log("clicked About")
-  axios.get("http://localhost:5000/about")
-    .then((response) => {
-      console.log("I'm in About!")
-    })
-    .catch((error) => {
-      console.log("There was an error")
-    })
-
-  return(<span>About</span>)
+  
+  let { user_id } = useParams();
+  console.log("user_id: ", user_id)
+  return(<span>Now showing information for {user_id}</span>);
 };
 
 const Users = () => {
@@ -65,7 +60,7 @@ const App = () => (
         <h2>
           Current Page is{' '}
           <Switch>
-            <Route path="/about">
+            <Route path="/about/:user_id">
               <About />
             </Route>
             <Route path="/users">
@@ -91,7 +86,7 @@ const App = () => (
             <LinkContainer to="/login">
               <Button>Login</Button>
             </LinkContainer>
-            <LinkContainer to="/about">
+            <LinkContainer to="/about/ABCDE">
               <Button>About</Button>
             </LinkContainer>
             <LinkContainer to="/home">
