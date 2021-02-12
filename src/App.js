@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { 
   MemoryRouter, 
   Switch, 
@@ -21,6 +21,12 @@ const Home = () => {
   return(<span>Home</span>);
 };
 
+const Logout = () => {
+  
+  console.log("clicked Logout!")
+  return(<span>Logout</span>);
+};
+
 const HelloWorld = () => {
   console.log("clicked Hello!")
   axios.get("http://localhost:5000/")
@@ -35,9 +41,11 @@ const HelloWorld = () => {
 };
 
 const About = () => {
-  
-  let { user_id } = useParams();
-  console.log("user_id: ", user_id)
+  // const [userId, setUserId] = useState('Not Logged In')
+
+  const {user_id} = useParams();
+  // setUserId(user_id)
+  // console.log(userId)
   return(<span>Now showing information for {user_id}</span>);
 };
 
@@ -47,21 +55,51 @@ const Users = () => {
   return(<span>Users</span>);
 };
 
-const Login = () => {
-  console.log("clicked Login")
-  return (<span>Login</span>);
-};
 
-const App = () => (
+// const Login = () => {
+//   console.log("clicked Login")
+//   return (<span>Login</span>);
+// };
+
+
+const App = () => {
+
+  //const user_id = "random"
+
+  const [user_id, setUserId] = useState('Not Logged In');
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/current_user', 
+    {withCredentials: true }) //sameSite=None
+    .then((response) => {
+      setUserId(response.data.name) 
+    })
+  .catch((error)=>{
+    console.log("ERROR! ", error)
+  })}, []);
+
+  console.log(user_id)
+
+  const logout = () => {
+  axios.get('http://localhost:5000/logout', 
+      {withCredentials: true })
+      .then(() => {
+        setUserId('') 
+      })
+    .catch((error)=>{
+      console.log("ERROR! ", error)
+    })};
+
+  return(
   <MemoryRouter>
     <Container className="p-3">
       <Jumbotron>
         <h1 className="header">Welcome To React-Bootstrap</h1>
         <h2>
-          Current Page is{' '}
+          Current Page is: {' '}
           <Switch>
             <Route path="/about/:user_id">
-              <About />
+              <About/>
             </Route>
             <Route path="/users">
               <Users />
@@ -75,8 +113,9 @@ const App = () => (
             <Route path="/login" component={()=>{
               window.location.href = 'http://localhost:5000/login';
               return null;
-            }}>
-              {/* <Login /> */}
+            }}/>
+            <Route path="/logout">
+              <Logout />
             </Route>
           </Switch>
         </h2>
@@ -84,9 +123,12 @@ const App = () => (
           Navigate to{' '}
           <ButtonToolbar className="custom-btn-toolbar">
             <LinkContainer to="/login">
-              <Button>Login</Button>
+              <Button>Logged in as {user_id}</Button>
             </LinkContainer>
-            <LinkContainer to="/about/ABCDE">
+            <LinkContainer to="/logout">
+              <Button onClick={logout}>Logout</Button>
+            </LinkContainer>
+            <LinkContainer to={`/about/${user_id}`}>
               <Button>About</Button>
             </LinkContainer>
             <LinkContainer to="/home">
@@ -104,6 +146,7 @@ const App = () => (
       </Jumbotron>
     </Container>
   </MemoryRouter>
-);
+  );
+};
 
 export default App;
