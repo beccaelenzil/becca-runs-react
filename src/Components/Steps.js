@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import axios from 'axios';
 import {
     XYPlot,
@@ -24,7 +24,7 @@ import {
 
 const Steps = (props) => {
 
-    axios.get('http://localhost:5000/steps', 
+        axios.get('http://localhost:5000/steps', 
           {withCredentials: true })
           .then((response) => {
             const data = response.data
@@ -34,7 +34,6 @@ const Steps = (props) => {
           console.log("ERROR! ", error)
         });
 
-     
       return (
         <div className="step-plot">
             <FlexibleWidthXYPlot height={300}>
