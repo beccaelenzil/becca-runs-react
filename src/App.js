@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { 
-  MemoryRouter, 
+  BrowserRouter as Router,
   Switch, 
   Route,
-  useParams
+  useParams,
+  Redirect
 } from 'react-router-dom';
 
 
@@ -21,92 +22,64 @@ const Home = () => {
   return(<span>Home</span>);
 };
 
-const Logout = () => {
-  
-  console.log("clicked Logout!")
-  return(<span>Logout</span>);
+const Logout = (props) => {
+  axios.get('http://localhost:5000/logout', 
+        {withCredentials: true })
+        .then(() => {
+          props.assignUser('') 
+        })
+      .catch((error)=>{
+        console.log("ERROR! ", error)
+      });
+  console.log("clicked Logout!");
+  return(<Redirect to="/home" />)
 };
 
-const HelloWorld = () => {
-  console.log("clicked Hello!")
-  axios.get("http://localhost:5000/")
-    .then((response) => {
-      console.log("I'm in Hello!")
-      console.log(response)
-    })
-    .catch((error) => {
-      console.log("There was an error", error)
-    })
-  return(<span>Hello World</span>);
-};
-
-const About = () => {
-  // const [userId, setUserId] = useState('Not Logged In')
-
-  const {user_id} = useParams();
-  // setUserId(user_id)
-  // console.log(userId)
-  return(<span>Now showing information for {user_id}</span>);
-};
-
-const Users = () => {
-  console.log("clicked Users")
-  
-  return(<span>Users</span>);
-};
-
-
-// const Login = () => {
-//   console.log("clicked Login")
-//   return (<span>Login</span>);
+// const HelloWorld = () => {
+//   console.log("clicked Hello!")
+//   axios.get("http://localhost:5000/")
+//     .then((response) => {
+//       console.log("I'm in Hello!")
+//       console.log(response)
+//     })
+//     .catch((error) => {
+//       console.log("There was an error", error)
+//     })
+//   return(<span>Hello World</span>);
 // };
 
+const About = (props) => {
+  return(<span>Now showing information for {props.user_id}</span>);
+};
+
+const LoggedIn = (props) => {
+  console.log("I'm logged in");
+  const {user_id} = useParams()
+  useEffect(()=>{props.assignUser(user_id)},[])
+  return (<Redirect to="/about" />)
+};
 
 const App = () => {
 
-  //const user_id = "random"
+  const [user_id, setUserId] = useState('');
 
-  const [user_id, setUserId] = useState('Not Logged In');
-
-  useEffect(() => {
-    axios.get('http://localhost:5000/current_user', 
-    {withCredentials: true }) //sameSite=None
-    .then((response) => {
-      setUserId(response.data.name) 
-    })
-  .catch((error)=>{
-    console.log("ERROR! ", error)
-  })}, []);
-
-  console.log(user_id)
-
-  const logout = () => {
-  axios.get('http://localhost:5000/logout', 
-      {withCredentials: true })
-      .then(() => {
-        setUserId('') 
-      })
-    .catch((error)=>{
-      console.log("ERROR! ", error)
-    })};
+  const path = user_id != '' ? "/logout" : "/login"
+  const LogoutLogin = user_id != '' ? "Logout" : "Login"
 
   return(
-  <MemoryRouter>
+  <Router>
     <Container className="p-3">
       <Jumbotron>
-        <h1 className="header">Welcome To React-Bootstrap</h1>
+        <h1 className="header">Becca Runs</h1>
         <h2>
-          Current Page is: {' '}
+          {' '}
           <Switch>
-            <Route path="/about/:user_id">
-              <About/>
+            <Route path="/about">
+              <About user_id={user_id}/>
             </Route>
-            <Route path="/users">
-              <Users />
-            </Route>
-            <Route path="/helloworld">
+            {/* <Route path="/helloworld">
               <HelloWorld />
-            </Route>
+            </Route> */}
             <Route path="/home">
               <Home />
             </Route>
@@ -115,37 +88,34 @@ const App = () => {
               return null;
             }}/>
             <Route path="/logout">
-              <Logout />
+              <Logout assignUser={setUserId}/>
+            </Route>
+            <Route path="/loggedin/:user_id">
+              <LoggedIn assignUser={setUserId}/>
             </Route>
           </Switch>
         </h2>
         <h2>
-          Navigate to{' '}
+          {' '}
           <ButtonToolbar className="custom-btn-toolbar">
-            <LinkContainer to="/login">
-              <Button>Logged in as {user_id}</Button>
+
+            <LinkContainer to={path}>
+              <Button>{LogoutLogin}</Button>
             </LinkContainer>
-            <LinkContainer to="/logout">
-              <Button onClick={logout}>Logout</Button>
-            </LinkContainer>
-            <LinkContainer to={`/about/${user_id}`}>
+            <LinkContainer to={`/about`}>
               <Button>About</Button>
             </LinkContainer>
             <LinkContainer to="/home">
               <Button>Home</Button>
             </LinkContainer>
-            <LinkContainer to="/users">
-              <Button>Users</Button>
-            </LinkContainer>
-            <LinkContainer to="/helloworld">
+            {/* <LinkContainer to="/helloworld">
               <Button>HelloWorld</Button>
-            </LinkContainer>            
-
+            </LinkContainer>             */}
           </ButtonToolbar>
         </h2>
       </Jumbotron>
     </Container>
-  </MemoryRouter>
+  </Router>
   );
 };
 
