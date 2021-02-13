@@ -25,17 +25,19 @@ import NavBar from './Components/NavBar'
 
 const App = () => {
 
-
-
   const [user_id, setUserId] = useState('');
+  const [stepData, setStepData] = useState(null);
 
   const path = user_id != '' ? "/logout" : "/login"
   const LogoutLogin = user_id != '' ? "Logout" : "Login"
+
+  console.log(user_id)
 
   return(
   <Router>
     <Container className="p-3">
       <Jumbotron>
+        <NavBar user_id={user_id} LogoutLogin={LogoutLogin} path={path}/>
         <h1 className="header">Becca Runs</h1>
         <h2>
           {' '}
@@ -44,7 +46,7 @@ const App = () => {
               <About user_id={user_id}/>
             </Route>
             <Route path="/steps">
-              <Steps/>
+              <Steps stepData={stepData} setStepData={setStepData}/>
             </Route>
             {/* <Route path="/helloworld">
               <HelloWorld />
@@ -63,10 +65,10 @@ const App = () => {
               <LoggedIn assignUser={setUserId}/>
             </Route>
           </Switch>
+          
         </h2>
         <h2>
           {' '}
-          <NavBar user_id={user_id} LogoutLogin={LogoutLogin} path={path}/>
         </h2>
       </Jumbotron>
     </Container>
