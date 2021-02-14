@@ -5,6 +5,7 @@ import {
   Route,
 } from 'react-router-dom';
 
+
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -26,10 +27,28 @@ import NavBar from './Components/NavBar'
 const App = () => {
 
   const [user_id, setUserId] = useState('');
-  const [stepData, setStepData] = useState(null);
+  const [stepData, setStepData] = useState([{x: 1, y: 1}]);
+  const [windowAverage, setWindowAgerage] = useState(10);
 
   const path = user_id != '' ? "/logout" : "/login"
   const LogoutLogin = user_id != '' ? "Logout" : "Login"
+
+  const months = [3]
+  const random = Math.floor(Math.random() * months.length);
+  const month = months[random]
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/steps/${month}`, 
+          {withCredentials: true })
+          .then((response) => {
+            const data = response.data
+            console.log("DATA: ", data)
+            setStepData(data)
+          })
+        .catch((error)=>{
+          console.log("ERROR! ", error)
+        })
+      }, []);
 
   console.log(user_id)
 
@@ -46,7 +65,7 @@ const App = () => {
               <About user_id={user_id}/>
             </Route>
             <Route path="/steps">
-              <Steps stepData={stepData} setStepData={setStepData}/>
+              <Steps stepData={stepData} window={windowAverage}/>
             </Route>
             {/* <Route path="/helloworld">
               <HelloWorld />
