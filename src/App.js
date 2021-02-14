@@ -54,8 +54,21 @@ const App = () => {
           {withCredentials: true })
           .then((response) => {
             const data = response.data
-            console.log("DATA: ", data)
+            //console.log("DATA: ", data)
             setStepData(data)
+          })
+        .catch((error)=>{
+          console.log("ERROR! ", error)
+        })
+      }, []);
+
+  useEffect(() => {
+    axios.get(`http://localhost:5000/current_user`, 
+          {withCredentials: true })
+          .then((response) => {
+            const data = response.data
+            //console.log("DATA: ", data)
+            setUserId(data["name"])
           })
         .catch((error)=>{
           console.log("ERROR! ", error)

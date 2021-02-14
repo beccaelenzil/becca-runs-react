@@ -16,12 +16,12 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
 const NavBar = (props) => {
-  const makeDropdown = () => {
-    // console.log(window.location.href)
-    // if (window.location.href === 'http://localhost:3000/steps') {
+  const makeStepsDropdown = () => {
       return(
       <Dropdown as={ButtonGroup} onSelect={handleSelect}>
-        <Button>Moving Average Window</Button>
+        <LinkContainer to={`/steps`}>
+                <Button>Steps</Button>
+            </LinkContainer>
 
         <Dropdown.Toggle id="dropdown-split-basic" />
 
@@ -34,8 +34,6 @@ const NavBar = (props) => {
         </Dropdown.Menu>
       </Dropdown>
       )
-    // }
-    // else{return "I'm not in STEPS"}
     }
 
 
@@ -48,23 +46,7 @@ const NavBar = (props) => {
             <LinkContainer to={`/about`}>
                 <Button>About</Button>
             </LinkContainer>
-            <LinkContainer to={`/steps`}>
-                <Button>Steps</Button>
-            </LinkContainer>
-            {makeDropdown()}
-
-            {/* <Dropdown as={ButtonGroup} onSelect={handleSelect}>
-            <Button variant="success">Moving Average Window</Button>
-
-            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-
-            <Dropdown.Menu>
-              <Dropdown.Item eventKey="3" val>3 days</Dropdown.Item>
-              <Dropdown.Item eventKey="7">1 week</Dropdown.Item>
-              <Dropdown.Item eventKey="10">10 days</Dropdown.Item>
-              <Dropdown.Item eventKey="14">2 weeks</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown> */}
+            {makeStepsDropdown()}
         </ButtonGroup>
         );
         };
@@ -75,8 +57,10 @@ const NavBar = (props) => {
     }
 
     return (
+        
         <ButtonToolbar className="custom-btn-toolbar">
-            <Button>Hello {props.user_id}!</Button>
+          <div><Button>Hello {props.user_id}!</Button></div>
+            
             <ButtonGroup className="mr-2" aria-label="First group">
                 <LinkContainer to="/home">
                     <Button>Home</Button>

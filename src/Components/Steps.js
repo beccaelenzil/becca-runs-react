@@ -47,7 +47,7 @@ const Steps = (props) => {
 
       const movingAverageData = calculateMovingAverage(props.stepData, props.window)
 
-      console.log("moving Average: ",movingAverageData)
+      //console.log("moving Average: ",movingAverageData)
 
       return (
         <div className="step-plot">
