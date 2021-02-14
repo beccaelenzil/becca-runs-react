@@ -10,12 +10,36 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Dropdown from 'react-bootstrap/Dropdown';
 import { LinkContainer } from 'react-router-bootstrap';
 import axios from 'axios';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 const NavBar = (props) => {
-    const renderAboutButton = (user_id) => {
+  const makeDropdown = () => {
+    // console.log(window.location.href)
+    // if (window.location.href === 'http://localhost:3000/steps') {
+      return(
+      <Dropdown as={ButtonGroup} onSelect={handleSelect}>
+        <Button>Moving Average Window</Button>
+
+        <Dropdown.Toggle id="dropdown-split-basic" />
+
+        <Dropdown.Menu>
+          <Dropdown.Item eventKey="3" val>3 days</Dropdown.Item>
+          <Dropdown.Item eventKey="7">1 week</Dropdown.Item>
+          <Dropdown.Item eventKey="10">10 days</Dropdown.Item>
+          <Dropdown.Item eventKey="14">2 weeks</Dropdown.Item>
+          <Dropdown.Item eventKey="21">3 weeks</Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      )
+    // }
+    // else{return "I'm not in STEPS"}
+    }
+
+
+    const renderPersonalButtons = (user_id) => {
         if (user_id === ''){
           return('');
         }else{
@@ -27,28 +51,27 @@ const NavBar = (props) => {
             <LinkContainer to={`/steps`}>
                 <Button>Steps</Button>
             </LinkContainer>
+            {makeDropdown()}
+
+            {/* <Dropdown as={ButtonGroup} onSelect={handleSelect}>
+            <Button variant="success">Moving Average Window</Button>
+
+            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+
+            <Dropdown.Menu>
+              <Dropdown.Item eventKey="3" val>3 days</Dropdown.Item>
+              <Dropdown.Item eventKey="7">1 week</Dropdown.Item>
+              <Dropdown.Item eventKey="10">10 days</Dropdown.Item>
+              <Dropdown.Item eventKey="14">2 weeks</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown> */}
         </ButtonGroup>
-        
         );
         };
     };
 
-    const renderPersonalButtons = (user_id) => {
-        if (user_id === ''){
-            return('');
-          }else{
-            return([
-                <li class="nav-item">
-                <a class="nav-link" href="/steps">Steps</a>
-              </li>,
-              <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
-              </li>
-
-            ]
-          );
-          };
-
+    const handleSelect = (e) => {
+      props.setWindow(e)
     }
 
     return (
@@ -58,52 +81,14 @@ const NavBar = (props) => {
                     <Button>Home</Button>
                 </LinkContainer>
             </ButtonGroup>
-            {renderAboutButton(props.user_id)}
+            {renderPersonalButtons(props.user_id)}
             <ButtonGroup aria-label="Third group">
               <LinkContainer to={props.path}>
                 <Button>{props.LogoutLogin}</Button>
               </LinkContainer>
             </ButtonGroup>
-            
-
-            <Dropdown as={ButtonGroup}>
-            <Button variant="success">Moving Average Window</Button>
-
-            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-
-            <Dropdown.Menu>
-              <Dropdown.Item href="#">3</Dropdown.Item>
-              <Dropdown.Item href="#">7</Dropdown.Item>
-              <Dropdown.Item href="#">10</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-
-
-           </ButtonToolbar>
+        </ButtonToolbar>
     );
 };
-          /*<div>' '</div>,
-          <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-          <a class="navbar-brand" href="#">Becca Runs</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
         
-          <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                
-              <li class="nav-item active">
-                <a class="nav-link" href="/home">Home
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              {renderPersonalButtons(props.user_id)}
-              <li class="nav-item">
-                <a class="nav-link" href={props.path}>{props.LogoutLogin}</a>
-              </li>
-            </ul>
-     
-          </div>
-        </nav> }*/
-
 export default NavBar

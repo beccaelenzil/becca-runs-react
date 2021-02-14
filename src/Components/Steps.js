@@ -74,14 +74,14 @@ const Steps = (props) => {
       return (
         <div className="step-plot">
             <FlexibleWidthXYPlot height={500} >
-                <YAxis/>
+                {/* <YAxis/> */}
                 <VerticalBarSeries data={data}/>
                 <LineSeries 
                   data={movingAverageData} 
                   style={{ fill: 'none', strokeWidth: 2}}
                   color = 'black'
                 />
-                  <ChartLabel
+                  {/* <ChartLabel
                     text="Y Axis"
                     className="alt-y-label"
                     includeMargin={false}
@@ -91,7 +91,7 @@ const Steps = (props) => {
                       transform: 'rotate(-90)',
                       textAnchor: 'end'
                     }}
-                    />
+                    /> */}
             </FlexibleWidthXYPlot>
         </div>
       );
