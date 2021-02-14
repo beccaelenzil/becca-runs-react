@@ -21,12 +21,12 @@ const NavBar = (props) => {
       <Dropdown as={ButtonGroup} onSelect={handleSelect}>
         <LinkContainer to={`/steps`}>
                 <Button>Steps</Button>
-            </LinkContainer>
-
+        </LinkContainer>
+        
         <Dropdown.Toggle id="dropdown-split-basic" />
 
         <Dropdown.Menu>
-          <Dropdown.Item eventKey="3" val>3 days</Dropdown.Item>
+          <Dropdown.Item eventKey="3">3 days</Dropdown.Item>
           <Dropdown.Item eventKey="7">1 week</Dropdown.Item>
           <Dropdown.Item eventKey="10">10 days</Dropdown.Item>
           <Dropdown.Item eventKey="14">2 weeks</Dropdown.Item>
@@ -34,6 +34,10 @@ const NavBar = (props) => {
         </Dropdown.Menu>
       </Dropdown>
       )
+    }
+
+    const handleSelect = (e) => {
+      props.setWindow(e)
     }
 
     const renderPersonalButtons = (user_id) => {
@@ -58,9 +62,7 @@ const NavBar = (props) => {
         };
     };
 
-    const handleSelect = (e) => {
-      props.setWindow(e)
-    }
+
 
     return (
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">

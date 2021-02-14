@@ -25,8 +25,12 @@ const calculateMovingAverage = (data, n) => {
   }
 
   const movingAverage = []
-  let j
-  for (j = n; j<stepArray.length; j++){
+
+  for (let i = 1; i<n; i++){
+    movingAverage.push({'x': i, 'y': mean(stepArray.slice(0,i))})
+  }
+
+  for (let j = n; j<stepArray.length; j++){
     movingAverage.push({'x': j, 'y': mean(stepArray.slice(j-n,j))})
   }
   return movingAverage
