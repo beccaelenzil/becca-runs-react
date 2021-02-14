@@ -21,6 +21,7 @@ import About from './Components/About'
 import LoggedIn from './Components/LoggedIn'
 import Logout from './Components/Logout'
 import NavBar from './Components/NavBar'
+import ErrorPage from './Components/ErrorPage'
 
 
 
@@ -40,6 +41,9 @@ const App = () => {
     {x: 8, y: 9},
     ]
   );
+
+  const [message, setErrorMessage] = useState('Something went wrong!')
+
   const [windowAverage, setWindowAverage] = useState(10);
 
   const path = user_id != '' ? "/logout" : "/login"
@@ -58,6 +62,7 @@ const App = () => {
             setStepData(data)
           })
         .catch((error)=>{
+          setErrorMessage(error)
           console.log("ERROR! ", error)
         })
       }, []);
@@ -71,6 +76,7 @@ const App = () => {
             setUserId(data["name"])
           })
         .catch((error)=>{
+          setErrorMessage(error)
           console.log("ERROR! ", error)
         })
       }, []);
@@ -112,6 +118,9 @@ const App = () => {
             </Route>
             <Route path="/loggedin/:user_id">
               <LoggedIn assignUser={setUserId}/>
+            </Route>
+            <Route path="/error">
+              <ErrorPage message={message} setErrorMessage={setErrorMessage}/>
             </Route>
           </Switch>
           
