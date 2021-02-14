@@ -10,6 +10,7 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Dropdown from 'react-bootstrap/Dropdown';
 import { LinkContainer } from 'react-router-bootstrap';
 import axios from 'axios';
 
@@ -63,6 +64,21 @@ const NavBar = (props) => {
                 <Button>{props.LogoutLogin}</Button>
               </LinkContainer>
             </ButtonGroup>
+            
+
+            <Dropdown as={ButtonGroup}>
+            <Button variant="success">Moving Average Window</Button>
+
+            <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+
+            <Dropdown.Menu>
+              <Dropdown.Item href="#">3</Dropdown.Item>
+              <Dropdown.Item href="#">7</Dropdown.Item>
+              <Dropdown.Item href="#">10</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
+
            </ButtonToolbar>
     );
 };

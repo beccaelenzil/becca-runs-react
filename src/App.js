@@ -28,7 +28,7 @@ const App = () => {
 
   const [user_id, setUserId] = useState('');
   const [stepData, setStepData] = useState([{x: 1, y: 1}]);
-  const [windowAverage, setWindowAgerage] = useState(10);
+  const [windowAverage, setWindowAverage] = useState(10);
 
   const path = user_id != '' ? "/logout" : "/login"
   const LogoutLogin = user_id != '' ? "Logout" : "Login"
@@ -56,7 +56,12 @@ const App = () => {
   <Router>
     <Container className="p-3">
       <Jumbotron>
-        <NavBar user_id={user_id} LogoutLogin={LogoutLogin} path={path}/>
+        <NavBar 
+          user_id={user_id} 
+          LogoutLogin={LogoutLogin} 
+          path={path} 
+          setWindow={setWindowAverage}
+        />
         <h1 className="header">Becca Runs</h1>
         <h2>
           {' '}
