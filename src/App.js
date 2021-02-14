@@ -87,7 +87,7 @@ const App = () => {
           path={path} 
           setWindow={setWindowAverage}
         />
-        <h1 className="header">Becca Runs</h1>
+        {/* <h1 className="header">Becca Runs</h1> */}
         <h2>
           {' '}
           <Switch>

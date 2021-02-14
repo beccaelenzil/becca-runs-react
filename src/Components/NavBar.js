@@ -36,18 +36,24 @@ const NavBar = (props) => {
       )
     }
 
-
     const renderPersonalButtons = (user_id) => {
         if (user_id === ''){
-          return('');
+          return(
+            <ButtonGroup className="mr-2" aria-label="First group">
+                <LinkContainer to="/home">
+                    <Button>Home</Button>
+                </LinkContainer>
+            </ButtonGroup>
+          );
         }else{
           return(
+            
         <ButtonGroup className="mr-2" aria-label="Second group">
-            <LinkContainer to={`/about`}>
-                <Button>About</Button>
+            <LinkContainer to={`/home`}>
+                <Button>{user_id}'s Home</Button>
             </LinkContainer>
             {makeStepsDropdown()}
-        </ButtonGroup>
+        </ButtonGroup> 
         );
         };
     };
@@ -57,22 +63,23 @@ const NavBar = (props) => {
     }
 
     return (
-        
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ButtonToolbar className="custom-btn-toolbar">
-          <div><Button>Hello {props.user_id}!</Button></div>
-            
-            <ButtonGroup className="mr-2" aria-label="First group">
+          <a class="navbar-brand" href="#">FitBit Web App by Becca</a>    
+            {/* <ButtonGroup className="mr-2" aria-label="First group">
                 <LinkContainer to="/home">
-                    <Button>Home</Button>
+                    <Button>{props.user_id}'s Home</Button>
                 </LinkContainer>
-            </ButtonGroup>
+            </ButtonGroup> */}
             {renderPersonalButtons(props.user_id)}
             <ButtonGroup aria-label="Third group">
               <LinkContainer to={props.path}>
                 <Button>{props.LogoutLogin}</Button>
               </LinkContainer>
             </ButtonGroup>
+            {/* <div>Hello {props.user_id}!</div> */}
         </ButtonToolbar>
+        </nav>
     );
 };
         

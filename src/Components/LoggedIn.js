@@ -9,7 +9,7 @@ const LoggedIn = (props) => {
     console.log("I'm logged in");
     const {user_id} = useParams()
     useEffect(()=>{props.assignUser(user_id)},[])
-    return (<Redirect to="/about" />)
+    return (<Redirect to="/home" />)
   };
 
 export default LoggedIn
