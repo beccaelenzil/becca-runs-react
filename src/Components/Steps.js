@@ -11,30 +11,12 @@ import {
   } from 'react-vis';
 import { mean } from 'mathjs'
 
-
-const hard_coded_data = [
-    {x: 1, y: 8},
-    {x: 2, y: 5},
-    {x: 3, y: 4},
-    {x: 4, y: 9},
-    {x: 5, y: 2},
-    {x: 6, y: 3},
-    {x: 7, y: 2},
-    {x: 8, y: 9},
-  ];
-
-//console.log(hard_coded_data)
-
-
-const convertToDate = (dateString) => {
-  const dateObject = Date(dateString)
-  return dateObject
-}
-
-
+// const convertToDate = (dateString) => {
+//   const dateObject = Date(dateString)
+//   return dateObject
+// }
 
 const calculateMovingAverage = (data, n) => {
-
 
   const stepArray = []
 
@@ -43,10 +25,6 @@ const calculateMovingAverage = (data, n) => {
   }
 
   const movingAverage = []
-  // for (let i = 0; i<n; i++){
-  //   movingAverage.push({'x': i, 'y': 10000})
-  // }
-
   let j
   for (j = n; j<stepArray.length; j++){
     movingAverage.push({'x': j, 'y': mean(stepArray.slice(j-n,j))})

@@ -76,6 +76,7 @@ const NavBar = (props) => {
 
     return (
         <ButtonToolbar className="custom-btn-toolbar">
+            <Button>Hello {props.user_id}!</Button>
             <ButtonGroup className="mr-2" aria-label="First group">
                 <LinkContainer to="/home">
                     <Button>Home</Button>

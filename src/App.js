@@ -26,8 +26,20 @@ import NavBar from './Components/NavBar'
 
 const App = () => {
 
-  const [user_id, setUserId] = useState('snowman');
-  const [stepData, setStepData] = useState([{x: 1, y: 1}]);
+  const [user_id, setUserId] = useState('');
+  const [stepData, setStepData] = useState
+  (
+    [
+    {x: 1, y: 8},
+    {x: 2, y: 5},
+    {x: 3, y: 4},
+    {x: 4, y: 9},
+    {x: 5, y: 2},
+    {x: 6, y: 3},
+    {x: 7, y: 2},
+    {x: 8, y: 9},
+    ]
+  );
   const [windowAverage, setWindowAverage] = useState(10);
 
   const path = user_id != '' ? "/logout" : "/login"
@@ -70,13 +82,13 @@ const App = () => {
               <About user_id={user_id}/>
             </Route>
             <Route path="/steps">
-              <Steps stepData={stepData} window={windowAverage}/>
+              <Steps user_id={user_id} stepData={stepData} window={windowAverage}/>
             </Route>
             {/* <Route path="/helloworld">
               <HelloWorld />
             </Route> */}
             <Route path="/home">
-              <Home />
+              <Home user_id={user_id}/>
             </Route>
             <Route path="/login" component={()=>{
               window.location.href = 'http://localhost:5000/login';
