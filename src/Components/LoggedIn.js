@@ -12,4 +12,4 @@ const LoggedIn = (props) => {
     return (<Redirect to="/home" />)
   };
 
-export default LoggedIn
+export default LoggedIn;

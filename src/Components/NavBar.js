@@ -65,9 +65,9 @@ const NavBar = (props) => {
 
 
     return (
-      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+      <nav className="navbar navbar-expand-sm bg-dark navbar-dark">
         <ButtonToolbar className="custom-btn-toolbar">
-          <a class="navbar-brand" href="#">FitBit Web App by Becca</a>    
+          <a className="navbar-brand" href="#">FitBit Web App by Becca</a>    
             {/* <ButtonGroup className="mr-2" aria-label="First group">
                 <LinkContainer to="/home">
                     <Button>{props.user_id}'s Home</Button>

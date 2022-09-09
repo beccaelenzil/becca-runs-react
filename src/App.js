@@ -5,13 +5,8 @@ import {
   Route,
 } from 'react-router-dom';
 
-
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
-import ButtonToolbar from 'react-bootstrap/ButtonToolbar';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import { LinkContainer } from 'react-router-bootstrap';
 import axios from 'axios';
 
 import './App.css';
@@ -24,23 +19,19 @@ import NavBar from './Components/NavBar'
 import ErrorPage from './Components/ErrorPage'
 
 
-
 const App = () => {
 
   const [user_id, setUserId] = useState('');
-  const [stepData, setStepData] = useState
-  (
-    [
-    {x: 1, y: 8},
+  const [stepData, setStepData] = useState([
+    {x: 1, y: 5},
     {x: 2, y: 5},
     {x: 3, y: 4},
-    {x: 4, y: 9},
-    {x: 5, y: 2},
-    {x: 6, y: 3},
-    {x: 7, y: 2},
-    {x: 8, y: 9},
-    ]
-  );
+    {x: 4, y: 4},
+    {x: 5, y: 5},
+    {x: 6, y: 5},
+    {x: 7, y: 4},
+    {x: 8, y: 4}
+  ]);
 
   const [message, setErrorMessage] = useState('Something went wrong!')
 
@@ -58,7 +49,7 @@ const App = () => {
           {withCredentials: true })
           .then((response) => {
             const data = response.data
-            //console.log("DATA: ", data)
+            console.log("STEP DATA: ", data)
             setStepData(data)
           })
         .catch((error)=>{
@@ -67,12 +58,26 @@ const App = () => {
         })
       }, []);
 
+    useEffect(() => {
+        axios.get(`http://localhost:5000/summary`, 
+              {withCredentials: true })
+              .then((response) => {
+                const data = response.data
+                console.log("Summary DATA: ", data)
+                setStepData(data)
+              })
+            .catch((error)=>{
+              setErrorMessage(error)
+              console.log("ERROR! ", error)
+            })
+          }, [user_id]);
+
   useEffect(() => {
     axios.get(`http://localhost:5000/current_user`, 
           {withCredentials: true })
           .then((response) => {
             const data = response.data
-            //console.log("DATA: ", data)
+            console.log("DATA: ", data)
             setUserId(data["name"])
           })
         .catch((error)=>{
